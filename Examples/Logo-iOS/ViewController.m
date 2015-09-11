@@ -52,13 +52,10 @@
   _valueLabel.textAlignment = NSTextAlignmentCenter;
   _valueLabel.numberOfLines = 0;
   _valueLabel.alpha = 0.0;
+  _valueLabel.backgroundColor = [UIColor clearColor];
   [self.view addSubview:_valueLabel];
   
-  CGRect shimmeringFrame = self.view.bounds;
-  shimmeringFrame.origin.y = shimmeringFrame.size.height * 0.68;
-  shimmeringFrame.size.height = shimmeringFrame.size.height * 0.32;
-  
-  _shimmeringView = [[FBShimmeringView alloc] initWithFrame:shimmeringFrame];
+  _shimmeringView = [[FBShimmeringView alloc] init];
   _shimmeringView.shimmering = YES;
   _shimmeringView.shimmeringBeginFadeDuration = 0.3;
   _shimmeringView.shimmeringOpacity = 0.3;
@@ -69,6 +66,7 @@
   _logoLabel.font = [UIFont fontWithName:@"HelveticaNeue-UltraLight" size:60.0];
   _logoLabel.textColor = [UIColor whiteColor];
   _logoLabel.textAlignment = NSTextAlignmentCenter;
+  _logoLabel.backgroundColor = [UIColor clearColor];
   _shimmeringView.contentView = _logoLabel;
   
   UITapGestureRecognizer *tapRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(_tapped:)];
@@ -76,6 +74,16 @@
   
   UIPanGestureRecognizer *panRecognizer = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(_panned:)];
   [self.view addGestureRecognizer:panRecognizer];
+}
+
+- (void)viewWillLayoutSubviews
+{
+  [super viewWillLayoutSubviews];
+
+  CGRect shimmeringFrame = self.view.bounds;
+  shimmeringFrame.origin.y = shimmeringFrame.size.height * 0.68;
+  shimmeringFrame.size.height = shimmeringFrame.size.height * 0.32;
+  _shimmeringView.frame = shimmeringFrame;
 }
 
 - (void)_tapped:(UITapGestureRecognizer *)tapRecognizer
@@ -89,7 +97,11 @@
   CGPoint velocity = [panRecognizer velocityInView:self.view];
   
   if (panRecognizer.state == UIGestureRecognizerStateBegan) {
-    _panVertical = (fabsf(velocity.y) > fabsf(velocity.x));
+#if CGFLOAT_IS_DOUBLE
+      _panVertical = (fabs(velocity.y) > fabs(velocity.x));
+#else
+      _panVertical = (fabsf(velocity.y) > fabsf(velocity.x));
+#endif
     
     if (_panVertical) {
       _panStartValue = _shimmeringView.shimmeringSpeed;
