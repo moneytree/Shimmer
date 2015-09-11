@@ -40,13 +40,15 @@
 
 LAYER_RW_PROPERTY(isShimmering, setShimmering:, BOOL)
 LAYER_RW_PROPERTY(shimmeringPauseDuration, setShimmeringPauseDuration:, CFTimeInterval)
+LAYER_RW_PROPERTY(shimmeringAnimationOpacity, setShimmeringAnimationOpacity:, CGFloat)
 LAYER_RW_PROPERTY(shimmeringOpacity, setShimmeringOpacity:, CGFloat)
 LAYER_RW_PROPERTY(shimmeringSpeed, setShimmeringSpeed:, CGFloat)
-LAYER_RW_PROPERTY(shimmeringHighlightWidth, setShimmeringHighlightWidth:, CGFloat)
+LAYER_RW_PROPERTY(shimmeringHighlightLength, setShimmeringHighlightLength:, CGFloat)
 LAYER_RW_PROPERTY(shimmeringDirection, setShimmeringDirection:, FBShimmerDirection)
 LAYER_ACCESSOR(shimmeringFadeTime, CFTimeInterval)
 LAYER_RW_PROPERTY(shimmeringBeginFadeDuration, setShimmeringBeginFadeDuration:, CFTimeInterval)
 LAYER_RW_PROPERTY(shimmeringEndFadeDuration, setShimmeringEndFadeDuration:, CFTimeInterval)
+LAYER_RW_PROPERTY(shimmeringBeginTime, setShimmeringBeginTime:, CFTimeInterval)
 
 - (void)setContentView:(UIView *)contentView
 {
